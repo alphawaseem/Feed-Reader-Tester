@@ -70,8 +70,6 @@ $(function() {
         it('menu changes its visibility when the menu icon is clicked', function() {
 
             menuIcon = $('.menu-icon-link');
-            spyEvent = spyOnEvent(menuIcon, 'click');
-
             //expect menu to show ie not to have menu-hidden class
             menuIcon.trigger('click');
             expect('body').not.toHaveClass('menu-hidden');
@@ -92,13 +90,10 @@ $(function() {
          * the use of Jasmine's beforeEach and asynchronous done() function.
          */
         beforeEach(done => {
-            loadFeed(0, function() {
-                done();
-            });
+            loadFeed(0, done);
         });
-        it('have a single .entry element in feed container', function(done) {
+        it('have a single .entry element in feed container', function() {
             expect($('.entry')[0]).toBeInDOM();
-            done();
         });
     });
 
@@ -109,9 +104,7 @@ $(function() {
          */
         let prevContent;
         beforeEach(done => {
-            loadFeed(2, function() {
-                done();
-            });
+            loadFeed(2, done);
             prevContent = $('.entry')[0].innerHTML;
         });
         it('content changes when new feed is loaded', function(done) {
