@@ -98,20 +98,25 @@ $(function() {
         });
     });
 
-    // describe('New Feed Selection', function() {
-    //     /* Test that ensures when a new feed is loaded
-    //      * by the loadFeed function that the content actually changes.
-    //      * Remember, loadFeed() is asynchronous.
-    //      */
-    //     let prevContent;
-    //     beforeEach(done => {
-    //         loadFeed(2, done);
-    //         prevContent = $('.entry')[0].innerHTML;
-    //     });
-    //     it('content changes when new feed is loaded', function(done) {
-    //         let newContent = $('.entry')[0].innerHTML;
-    //         expect(prevContent).not.toEqual(newContent);
-    //         done();
-    //     });
-    // });
+    describe('New Feed Selection', function() {
+        /* Test that ensures when a new feed is loaded
+         * by the loadFeed function that the content actually changes.
+         * Remember, loadFeed() is asynchronous.
+         */
+        let prevContent;
+        let newContent;
+        beforeAll(function(done) {
+            loadFeed(1, function() {
+                prevContent = $('.entry')[0].innerHTML;
+                loadFeed(2, function() {
+                    newContent = $('.entry')[0].innerHTML;
+                    done();
+                });
+            });
+        });
+        it('content changes when new feed is loaded', function(done) {
+            expect(prevContent).not.toEqual(newContent);
+            done();
+        });
+    });
 }());
